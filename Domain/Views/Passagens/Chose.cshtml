@@ -1,0 +1,18 @@
+﻿@model Filter
+
+
+<div class="d-flex justify-content-around align-items-centerm mb-5">
+    <form class="row g-3" method="post" asp-controller="Passagens" asp-action="Index">
+        <div class="col-auto">
+            <label for="none" class="visually-hidden">Email</label>
+            <input type="text" readonly class="form-control-plaintext" id="noneid" value="Código da garagem:">
+        </div>
+        <div class="col-auto">
+            <label for="Codigo" class="visually-hidden">Código</label>
+            <input type="text" class="form-control" asp-for="Codigo" id="codigo" placeholder="Código">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-success w-50">Buscar</button>
+        </div>
+    </form>
+</div>

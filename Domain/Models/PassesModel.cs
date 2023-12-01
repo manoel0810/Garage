@@ -1,6 +1,7 @@
 ﻿
 #nullable disable
 
+using System.Globalization;
 using System.Text.Json.Serialization;
 
 namespace Domain.Models
@@ -33,6 +34,32 @@ namespace Domain.Models
 
         [JsonPropertyName("precoTotal")]
         public string PrecoTotal { get; set; }
+
+
+        //------------------------------------------------------------------------
+
+        public DateTime HoraEntrada => ParserDateString(DataHoraEntrada);
+        public DateTime HoraSaida => ParserDateString(DataHoraSaida);
+        public TimeSpan ElipsedTimeOnGarage => ElipsedTime(HoraEntrada, HoraSaida);
+
+        //------------------------------------------------------------------------
+
+        #region ACCESS_CONVERTER
+
+        private static DateTime ParserDateString(string data)
+        {
+            if (!string.IsNullOrWhiteSpace(data))
+                return DateTime.ParseExact(data, "dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+
+            throw new ArgumentException("Argumento inválido para conversão", nameof(data));
+        }
+
+        private static TimeSpan ElipsedTime(DateTime @in, DateTime @out)
+        {
+            return @out.Subtract(@in);
+        }
+
+        #endregion
     }
 
     public class PassStruct

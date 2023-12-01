@@ -1,5 +1,3 @@
-using Domain.Request;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -26,4 +24,4 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+app.Run("http://localhost:5181");

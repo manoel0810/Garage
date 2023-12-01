@@ -27,13 +27,13 @@ namespace Garage.Controllers
                 return Ok(new
                 {
                     message = "no formats avaible",
-                    models
+                    paymentsModel = models
                 });
 
             return Ok(new
             {
                 datetime = DateTime.Now,
-                models
+                paymentsModel = models
             });
         }
 
@@ -46,7 +46,7 @@ namespace Garage.Controllers
                 return Ok(new
                 {
                     datetime = DateTime.Now,
-                    model
+                    paymentsModel = model
                 });
             }
 
@@ -55,22 +55,5 @@ namespace Garage.Controllers
                 message = $"no results for '{cod}'"
             });
         }
-
-        /*
-        // POST: Garage/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-        */
     }
 }

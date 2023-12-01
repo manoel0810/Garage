@@ -26,13 +26,13 @@ namespace Garage.Controllers
                 return Ok(new
                 {
                     message = "no garages avaible",
-                    models
+                    garagens = models
                 });
 
             return Ok(new
             {
                 datetime = DateTime.Now,
-                models
+                garagens = models
             });
         }
 
@@ -45,7 +45,7 @@ namespace Garage.Controllers
                 return Ok(new
                 {
                     datetime = DateTime.Now,
-                    garage
+                    garagens = garage
                 });
             }
 

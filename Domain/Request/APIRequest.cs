@@ -5,14 +5,10 @@ namespace Domain.Request
 {
     public class APIRequest
     {
-        private readonly string _API_SERVICE_HOST = "https://localhost:32770/";
-        private readonly string _routeAllClient = "Client";
+        private readonly string _API_SERVICE_HOST = "http://localhost:5180/";
 
-        public async Task<IEnumerable<Pass>?> GetPassesAsync()
+        private static IEnumerable<Pass>? TreatResponseGarageContent(string response)
         {
-            HttpClientHost host = new HttpClientHost(_API_SERVICE_HOST, _routeAllClient);
-            string response = await host.DoRequest();
-
             if (response != null)
             {
                 PassStruct? passes = JsonSerializer.Deserialize<PassStruct?>(response);
@@ -29,16 +25,88 @@ namespace Domain.Request
             }
         }
 
+        private static IEnumerable<GaragensModel>? TreatResponseGarage(string response)
+        {
+            if (response != null)
+            {
+                GaragensStruct? passes = JsonSerializer.Deserialize<GaragensStruct?>(response);
+                if (passes != null)
+                {
+                    return passes.Garagens as IEnumerable<GaragensModel>;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        private static IEnumerable<PaymentFormModel>? TreatResponsePayment(string response)
+        {
+            if (response != null)
+            {
+                PaymentStruct? passes = JsonSerializer.Deserialize<PaymentStruct?>(response);
+                if (passes != null)
+                {
+                    return passes.FormasPagamento as IEnumerable<PaymentFormModel>;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public async Task<IEnumerable<Pass>?> GetPassesAsync(string route)
+        {
+            HttpClientHost host = new(_API_SERVICE_HOST, route);
+            string response = await host.DoRequest();
+
+            return TreatResponseGarageContent(response);
+        }
+
+        public async Task<IEnumerable<Pass>?> GetPassesByGarageCode(string route, string param)
+        {
+            HttpClientHost host = new(_API_SERVICE_HOST, route, param);
+            string response = await host.DoRequest();
+
+            return TreatResponseGarageContent(response);
+        }
+
+        public async Task<IEnumerable<GaragensModel>?> GetGarageInformation(string route, string param)
+        {
+            HttpClientHost host = new(_API_SERVICE_HOST, route, param);
+            string response = await host.DoRequest();
+
+            return TreatResponseGarage(response);
+        }
+
+        public async Task<IEnumerable<PaymentFormModel>?> GetAllPaymentFormats()
+        {
+            HttpClientHost host = new(_API_SERVICE_HOST, "payment", "");
+            string response = await host.DoRequest();
+
+            return TreatResponsePayment(response);
+        }
+
 
         private class HttpClientHost
         {
             private readonly string _host;
             private readonly string _endPoint;
 
-            public HttpClientHost(string host, string endPoint)
+            public HttpClientHost(string host, string endPoint, string param = "")
             {
+                if (!string.IsNullOrWhiteSpace(param))
+                    if (!param.StartsWith("/"))
+                        param = $"/{param}";
+
                 _host = host;
-                _endPoint = endPoint;
+                _endPoint = $"{endPoint}{param}";
             }
 
             public async Task<string> DoRequest()
