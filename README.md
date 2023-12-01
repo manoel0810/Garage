@@ -18,3 +18,17 @@ Para acessar a documentação por Swagger UI, acesse http://localhost:5180/swagg
 Certificar de estar no diretório Garage/Domain/
 
 Em Garage/Domain/, executar `dotnet run` por CLI, expondo a web page em http://localhost:5181
+
+
+### Geral
+Foi utilizado ORM EF, para conexão com banco de dados SQL Server em ambiente Docker. As APIs foram escritas em .Net Core 7.0.
+Para o domínio, buscou-se o formato MVC, para organizar o código ASP Net, com Razor. Os dados base para a aplicação fornecidos em JSON estão inclusos no projeto, e
+a interface `IInit` é responsável pelo contrato para iniciar as tabelas do banco de dados com essas informações, usando de DataStructs personalizados para desserializar os JSONs.
+
+### Screenshots
+
+![screenshot](https://github.com/manoel0810/Garage/blob/master/cp1.png)
+![screenshot](https://github.com/manoel0810/Garage/blob/master/cp2.png)
+![screenshot](https://github.com/manoel0810/Garage/blob/master/cp3.png)
+![screenshot](https://github.com/manoel0810/Garage/blob/master/cp4.png)
+![screenshot](https://github.com/manoel0810/Garage/blob/master/cp5.png)
