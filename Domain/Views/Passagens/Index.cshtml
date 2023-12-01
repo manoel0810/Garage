@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Pass>
+
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Carro</th>
+            <th scope="col">Placa</th>
+            <th scope="col">Garagem</th>
+            <th scope="col">Entrada</th>
+            <th scope="col">Saída</th>
+            <th scope="col">Valor</th>
+            <th scope="col">Pagamento</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if(Model != null)
+        {
+            @foreach(Pass p in Model)
+            {
+                <tr>
+                    <th scope="row">@p.CarroModelo</th>
+                    <td>@p.CarroPlaca</td>
+                    <td>@p.Garagem</td>
+                    <td>@p.DataHoraEntrada</td>
+                    <td>@p.DataHoraSaida</td>
+                    <td>@p.PrecoTotal</td>
+                    <td>@p.FormaPagamento</td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
